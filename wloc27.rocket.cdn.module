@@ -1,0 +1,8 @@
+#!name=WLOC27 定位改写
+#!desc=Apple gs-loc 定位响应改写 | 改 argument 里的 lat/lon
+
+[MITM]
+hostname = gs-loc.apple.com, gs-loc-cn.apple.com
+
+[Script]
+wloc27 = type=http-response,pattern=^https?://gs-loc[^/]*\.apple\.com(\.cn)?/clls/,requires-body=1,max-size=0,script-path=https://gcore.jsdelivr.net/gh/nyc245/wloc-ios27@main/scripts/wloc27.js,argument=lat=30.274100&lon=120.155100&accuracy=20&ttlMode=short&patchAll=1&logLevel=debug
