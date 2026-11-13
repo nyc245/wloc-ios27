@@ -1,0 +1,8 @@
+#!name=WLOC27 定位改写 · Nextin
+#!desc=拦截 Apple gs-loc 网络定位响应并改写坐标
+
+[MITM]
+hostname = gs-loc.apple.com, gs-loc-cn.apple.com
+
+[Script]
+WLOC27 = type=http-response, pattern=^https?://gs-loc[^/]*\.apple\.com(\.cn)?/clls/, requires-body=true, binary-body-mode=true, script-path=http://10.52.179.181:8787/scripts/wloc27-nextin.js, timeout=20, argument=lat=30.274100&lon=120.155100&accuracy=20&ttlMode=short&patchAll=1&logLevel=info

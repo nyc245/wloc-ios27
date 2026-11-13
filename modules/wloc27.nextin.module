@@ -1,0 +1,20 @@
+#!name=WLOC27 定位改写 · Nextin
+#!desc=拦截 Apple gs-loc 网络定位响应并改写坐标｜改坐标只动 argument 那一行
+
+# ─────────────────────────────────────────────────────────────
+# 用法：
+#   1. 把下面 script-path 里的 USER 换成你的 GitHub 用户名（仓库名 wloc-ios27）
+#   2. 改 argument 里的 lat/lon 成你要的坐标（WGS-84，纬度在前）
+#   3. Nextin → 设置 → HTTPS 重写 → 导入重写模块 → 粘贴本文件全文
+#   4. 确认 MITM 证书已安装并完全信任，代理模式选「规则」
+#
+# 坐标怎么拿：用高德/苹果地图长按看坐标，但那是 GCJ-02，要转成 WGS-84。
+# 直接抄 GCJ 会偏 100~600 米——签到点会跑到隔壁楼。
+# 转换：https://cdn.jsdelivr.net/gh/USER/wloc-ios27@main/web/index.html（选点页，自动换算）
+# ─────────────────────────────────────────────────────────────
+
+[MITM]
+hostname = gs-loc.apple.com, gs-loc-cn.apple.com
+
+[Script]
+WLOC27 = type=http-response, pattern=^https?://gs-loc[^/]*\.apple\.com(\.cn)?/clls/, requires-body=true, binary-body-mode=true, script-path=https://cdn.jsdelivr.net/gh/USER/wloc-ios27@main/scripts/wloc27-nextin.js, timeout=20, argument=lat=30.274100&lon=120.155100&accuracy=20&ttlMode=short&patchAll=1&logLevel=info

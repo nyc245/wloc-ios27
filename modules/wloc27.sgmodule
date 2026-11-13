@@ -1,0 +1,17 @@
+#!name=WLOC27 定位改写 · iOS 26/27
+#!desc=拦截 Apple gs-loc 网络定位响应改写坐标；配合选点页或快捷指令切换，早操签到用
+#!system=ios
+
+# ─────────────────────────────────────────────────────────────
+# 用法：把下面两处 USER 换成你自己的 GitHub 用户名（仓库名保持 wloc-ios27）
+#      不想用 GitHub 就把整条 script-path 换成你自己的任何静态地址
+#      CDN 版（国内更通）：https://cdn.jsdelivr.net/gh/USER/wloc-ios27@main/scripts/xxx.js
+#      Raw 版：https://raw.githubusercontent.com/USER/wloc-ios27/main/scripts/xxx.js
+# ─────────────────────────────────────────────────────────────
+
+[Script]
+wloc27-response = type=http-response,pattern=^https?://gs-loc[^/]*\.apple\.com(\.cn)?/clls/,requires-body=1,max-size=0,timeout=20,script-path=https://cdn.jsdelivr.net/gh/USER/wloc-ios27@main/scripts/wloc27.js
+wloc27-settings = type=http-request,pattern=^https?://gs-loc[^/]*\.apple\.com(\.cn)?/wloc-settings/,requires-body=1,max-size=0,timeout=20,script-path=https://cdn.jsdelivr.net/gh/USER/wloc-ios27@main/scripts/wloc27-settings.js
+
+[MITM]
+hostname = %APPEND% gs-loc.apple.com, gs-loc-cn.apple.com
